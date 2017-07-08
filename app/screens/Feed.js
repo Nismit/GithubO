@@ -10,7 +10,7 @@ import {
   ListItem,
 } from 'react-native-elements';
 
-const API_URL = 'https://api.github.com/users/Nismit/repos';
+const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 
 export default class Feed extends Component {
   constructor( props ) {
