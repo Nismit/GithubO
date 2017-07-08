@@ -12,7 +12,7 @@ import {
 
 const API_URL = 'https://api.github.com/users/Nismit/repos';
 
-class Feed extends Component {
+export default class Feed extends Component {
   constructor( props ) {
     super( props );
     this.state = {
@@ -100,5 +100,3 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dddddd',
   }
 });
-
-export default Feed;

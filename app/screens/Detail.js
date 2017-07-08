@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-class Detail extends Component {
+export default class Detail extends Component {
   render() {
     const { name, description,
       created_at,
@@ -37,5 +37,3 @@ const styles = StyleSheet.create({
     paddingTop: 22,
   },
 });
-
-export default Detail;
