@@ -70,27 +70,37 @@ export default class Detail extends Component {
           <Text style = { styles.sectionText }>General</Text>
         </View>
         <ListItem
-          title="Watch"
+          containerStyle = { styles.listItem }
+          titleStyle = { styles.listTitle }
+          title = "Watch"
           rightTitle = { watchers_count !== 0 ? watchers_count.toString() : '0'  }
           hideChevron
         />
         <ListItem
-          title="Star"
+          containerStyle = { styles.listItem }
+          titleStyle = { styles.listTitle }
+          title = "Star"
           rightTitle = { stargazers_count !== 0 ? stargazers_count.toString() : '0'  }
           hideChevron
         />
         <ListItem
-          title="Fork"
+          containerStyle = { styles.listItem }
+          titleStyle = { styles.listTitle }
+          title = "Fork"
           rightTitle = { forks_count !== 0 ? forks_count.toString() : '0'  }
           hideChevron
         />
         <ListItem
-          title="Language"
+          containerStyle = { styles.listItem }
+          titleStyle = { styles.listTitle }
+          title = "Language"
           rightTitle = { language }
           hideChevron
         />
         <ListItem
-          title="Last Commit"
+          containerStyle = { styles.listItem }
+          titleStyle = { styles.listTitle }
+          title = "Last Commit"
           rightTitle = { lastCommitTime }
           hideChevron
         />
@@ -98,11 +108,15 @@ export default class Detail extends Component {
 
         <List>
           <ListItem
+            containerStyle = { styles.listItem }
+            titleStyle = { styles.listTitle }
             title="Issues"
             badge={{ value: `${ this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
           />
           <ListItem
+            containerStyle = { styles.listItem }
+            titleStyle = { styles.listTitle }
             title="Pull requests"
             badge={{ value: `${ this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
@@ -119,14 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 22,
   },
-  listContainer: {
-    marginTop: 0,
-    backgroundColor: '#ffffff',
-  },
-  listItem: {
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
   section: {
     borderBottomWidth: 1,
     borderBottomColor: '#dddddd',
@@ -134,9 +140,20 @@ const styles = StyleSheet.create({
   },
   sectionText: {
     fontWeight: 'bold',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 10,
+    paddingBottom: 10,
     paddingLeft: 10,
     color: '#ffffff',
+  },
+  listContainer: {
+    marginTop: 0,
+    backgroundColor: '#ffffff',
+  },
+  listItem: {
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  listTitle: {
+    fontSize: 15,
   },
 });
