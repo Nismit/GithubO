@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  View
-} from 'react-native';
-import {
-  List,
-  ListItem,
-} from 'react-native-elements';
+import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 
 const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 
@@ -16,13 +8,9 @@ export default class Feed extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      //dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
       repositories: [],
       loaded: false,
     };
-    // this.state = {
-    //   dataSource: [],
-    // };
   }
 
   showDetail = ( repository ) => {
@@ -69,7 +57,6 @@ export default class Feed extends Component {
         .then((response) => response.json())
         .then((responseData) => {
             this.setState({
-              //dataSource: this.state.dataSource.cloneWithRows(responseData),
               repositories: responseData,
               loaded: true,
             });
@@ -83,8 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: '#F5FCFF',
-    //paddingTop: 22,
   },
   loadText: {
     fontSize: 22,
@@ -94,8 +79,6 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 18,
-    //fontSize: 18,
-    //height: 44,
     borderBottomWidth: 1,
     borderBottomColor: '#dddddd',
   }
