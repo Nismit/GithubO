@@ -1,9 +1,53 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { List, ListItem, Grid, Col, Icon } from 'react-native-elements';
+import { List, ListItem, Card, Icon } from 'react-native-elements';
 import moment from 'moment';
 
 export default class Detail extends Component {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      issues: [],
+      pulls: [],
+      loaded: false,
+    };
+  }
+
+  componentDidMount() {
+    let { issues_url,
+      pulls_url
+    } =  this.props.navigation.state.params
+
+    issues_url = issues_url.replace(/{\/number}/,'')
+    pulls_url = pulls_url.replace(/{\/number}/,'')
+
+    // get issue dara from api
+    this.fetchData( issues_url, true);
+    this.fetchData( pulls_url, false);
+  }
+
+  // memo https://react-native-training.github.io/react-native-elements/API/lists/
+
+  fetchData( URL, issueFlag ) {
+    fetch(URL)
+        .then((response) => response.json())
+        .then((responseData) => {
+          if( issueFlag === true ) {
+            this.setState({
+              issues: responseData,
+            });
+            //console.log(this.state.issues);
+          } else {
+            this.setState({
+              pulls: responseData,
+            });
+            //console.log(this.state.pulls);
+          }
+
+        })
+        .done();
+  }
+
   render() {
     const { name,
       description,
@@ -19,21 +63,11 @@ export default class Detail extends Component {
 
     let lastCommitTime = moment( pushed_at ).format('YYYY/MM/DD HH:mm')
 
-    // <Text>Repository: { name }{"\n"}
-    // Created at: { created_at }{"\n"}
-    // Last Commit at: { pushed_at }{"\n"}
-    // Website: { homepage }{"\n"}
-    // Stars: { stargazers_count }{"\n"}
-    // Language: { language }{"\n"}
-    // Fork Count: { forks_count }{"\n"}
-    // Open Issues: { open_issues }{"\n"}
-    // </Text>
-
     return (
       <ScrollView>
-      <List style={styles.listContainer}>
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>General</Text>
+      <List style = { styles.listContainer }>
+        <View style = { styles.section }>
+          <Text style = { styles.sectionText }>General</Text>
         </View>
         <ListItem
           title="Watch"
@@ -65,13 +99,12 @@ export default class Detail extends Component {
         <List>
           <ListItem
             title="Issues"
-            //rightTitle=
-            badge={{ value: `${ open_issues !== 0 ? open_issues.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+            badge={{ value: `${ this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
           />
           <ListItem
             title="Pull requests"
-            //rightTitle={  }
+            badge={{ value: `${ this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
           />
         </List>
@@ -84,22 +117,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    //alignItems: 'center',
-    //backgroundColor: '#F5FCFF',
     paddingTop: 22,
   },
   listContainer: {
     marginTop: 0,
     backgroundColor: '#ffffff',
   },
+  listItem: {
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
   section: {
     borderBottomWidth: 1,
     borderBottomColor: '#dddddd',
+    backgroundColor: '#00052A',
   },
   sectionText: {
     fontWeight: 'bold',
-    paddingTop: 3,
-    paddingBottom: 3,
+    paddingTop: 8,
+    paddingBottom: 8,
     paddingLeft: 10,
+    color: '#ffffff',
   },
 });
