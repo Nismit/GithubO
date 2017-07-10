@@ -23,8 +23,8 @@ export default class Feed extends Component {
 
   renderLoadingView() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.loadText}>
+        <View style = {styles.container}>
+            <Text style = {styles.loadText}>
                 Loading Repositories...
             </Text>
         </View>
@@ -39,12 +39,14 @@ export default class Feed extends Component {
 
     return (
       <ScrollView>
-        <List style={styles.listContainer}>
+        <List style = {styles.listContainer}>
           { this.state.repositories.map(( repository ) => (
             <ListItem
-              key={ repository.id }
-              title={ repository.name }
-              onPress={() => this.showDetail( repository )}
+              containerStyle = { styles.listItem }
+              titleStyle = { styles.listTitle }
+              key = { repository.id }
+              title = { repository.name }
+              onPress = {() => this.showDetail( repository )}
             />
           ))}
         </List>
@@ -77,9 +79,11 @@ const styles = StyleSheet.create({
   listContainer: {
     marginTop: 0,
   },
-  item: {
-    padding: 18,
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-  }
+  listItem: {
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  listTitle: {
+    fontSize: 15,
+  },
 });
