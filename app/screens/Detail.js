@@ -49,11 +49,11 @@ export default class Detail extends Component {
   }
 
   showIssues = ( issues ) => {
-    this.props.navigation.navigate('Issues', { ...issues });
+    this.props.navigation.navigate('Issues', { issues: issues });
   };
 
   showPulls = ( pulls ) => {
-    this.props.navigation.navigate('Pulls', { ...pulls });
+    this.props.navigation.navigate('Pulls', { pulls: pulls });
   };
 
   render() {
