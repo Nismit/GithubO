@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { List, ListItem, Card, Icon } from 'react-native-elements';
+import { Card, Icon } from 'react-native-elements';
+import moment from 'moment';
 
 export default class Issues extends Component {
-  //const issues = [this.props.navigation.state.params]
-
   constructor( props ) {
     super( props )
     this.state = {
@@ -38,35 +37,20 @@ export default class Issues extends Component {
   }
 
   render() {
-    //console.log(issues);
-    return (
-      <Text>Test</Text>
-    );
-    // const { name,
-    //   description,
-    //   watchers_count,
-    //   created_at,
-    //   pushed_at,
-    //   homepage,
-    //   language,
-    //   open_issues,
-    //   stargazers_count,
-    //   forks_count
-    // } = this.props.navigation.state.params
-
     // let lastCommitTime = moment( pushed_at ).format('YYYY/MM/DD HH:mm')
 
-    //const issues = this.props.navigation.state.params
-
-    // return (
-    //   <ScrollView>
-    //     { issues.map(( issue ) => (
-    //       <View style = { styles.container }>
-    //         <Text style = { styles.sectionText }>{ issue.title }</Text>
-    //       </View>
-    //     ))}
-    //   </ScrollView>
-    // );
+    return (
+      <ScrollView>
+        { this.props.navigation.state.params.issues.map(( issue ) => (
+          <Card key={issue.id}>
+              <View>
+                <Text style = { styles.issueTitle }>{issue.title}</Text>
+                <Text>{issue.body}</Text>
+              </View>
+          </Card>
+        ))}
+      </ScrollView>
+    );
   }
 }
 
@@ -76,4 +60,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 22,
   },
+  issueTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
 });
