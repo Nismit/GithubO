@@ -48,6 +48,14 @@ export default class Detail extends Component {
         .done();
   }
 
+  showIssues = ( issues ) => {
+    this.props.navigation.navigate('Issues', { ...issues });
+  };
+
+  showPulls = ( pulls ) => {
+    this.props.navigation.navigate('Pulls', { ...pulls });
+  };
+
   render() {
     const { name,
       description,
@@ -113,6 +121,7 @@ export default class Detail extends Component {
             title="Issues"
             badge={{ value: `${ this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
+            onPress = {() => this.showIssues( this.state.issues )}
           />
           <ListItem
             containerStyle = { styles.listItem }
@@ -120,6 +129,7 @@ export default class Detail extends Component {
             title="Pull requests"
             badge={{ value: `${ this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
             hideChevron
+            onPress = {() => this.showPulls( this.state.pulls )}
           />
         </List>
       </ScrollView>

@@ -1,8 +1,9 @@
-import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import React from 'react'
+import { StackNavigator } from 'react-navigation'
 
-import Feed from '../screens/Feed';
-import Detail from '../screens/Detail';
+import Feed from '../screens/Feed'
+import Detail from '../screens/Detail'
+import Issues from '../screens/Issues'
 
 export const Nav = StackNavigator({
   Feed: {
@@ -15,6 +16,12 @@ export const Nav = StackNavigator({
     screen: Detail,
     navigationOptions: ({ navigation }) => ({
       title: `${ navigation.state.params.name }`,
+    }),
+  },
+  Issues: {
+    screen: Issues,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Issues',
     }),
   },
 });
