@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, } from 'react-native';
 import { List, ListItem, Card, Icon } from 'react-native-elements';
 import moment from 'moment';
 
@@ -120,7 +120,7 @@ export default class Detail extends Component {
             titleStyle = { styles.listTitle }
             title="Issues"
             badge={{ value: `${ this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
-            hideChevron
+            //hideChevron
             onPress = {() => this.showIssues( this.state.issues )}
           />
           <ListItem
@@ -128,7 +128,7 @@ export default class Detail extends Component {
             titleStyle = { styles.listTitle }
             title="Pull requests"
             badge={{ value: `${ this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'  }`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
-            hideChevron
+            //hideChevron
             onPress = {() => this.showPulls( this.state.pulls )}
           />
         </List>

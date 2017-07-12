@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
