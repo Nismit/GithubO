@@ -1,10 +1,10 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+* Sample React Native App
+* https://github.com/facebook/react-native
+* @flow
+*/
 
- import { AppRegistry } from 'react-native';
- import App from './app/index';
+import { AppRegistry } from 'react-native';
+import App from './app/index';
 
- AppRegistry.registerComponent('GithubO', () => App);
+AppRegistry.registerComponent('GithubO', () => App);
