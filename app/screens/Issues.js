@@ -8,12 +8,8 @@ export default class Issues extends Component {
   constructor( props ) {
     super( props )
 
-    const collapsed  = {}
-    this.props.navigation.state.params.issues.forEach((issue)=>collapsed[issue.id] = true)
-
     this.state = {
       loaded: false,
-      collapsed: collapsed,
     }
   }
 
@@ -23,12 +19,6 @@ export default class Issues extends Component {
 
   _handler(e) {
     console.log(e);
-  }
-
-  _toggleExpanded = (id) => {
-    const newState = { collapsed: this.state.collapsed }
-    newState.collapsed[id] = !this.state.collapsed[id]
-    this.setState(newState)
   }
 
   fetchData( URL, issueFlag ) {
@@ -56,24 +46,47 @@ export default class Issues extends Component {
     return (
       <ScrollView>
         { this.props.navigation.state.params.issues.map(( issue ) => (
-          <Card key={issue.id}>
-              <View>
-                <Text style = { styles.issueTitle }>{ issue.title }</Text>
-                <Text>{ issue.user.login } opened this issue.</Text>
-              </View>
-
-              <Collapsible collapsed = { this.state.collapsed[issue.id] }>
-                <Text>{ issue.body }</Text>
-              </Collapsible>
-
-              <Button
-                buttonStyle = { styles.buttonStyle }
-                onPress = { ()=> this._toggleExpanded(issue.id) }
-                title = { this.state.collapsed[issue.id] ? 'SHOW ISSUE' : 'HIDE ISSUE' }
-              />
-          </Card>
+          <IssueCard
+            key={issue.id}
+            { ...issue }
+            />
         ))}
       </ScrollView>
+    );
+  }
+}
+
+class IssueCard extends Component {
+  constructor( props ) {
+    super( props )
+
+    this.state = {
+      collapsed: true
+    }
+  }
+
+  _toggleExpanded = () => {
+    this.setState({ collapsed: !this.state.collapsed })
+  }
+
+  render() {
+    return (
+      <Card>
+          <View>
+            <Text style = { styles.issueTitle }>{ this.props.title }</Text>
+            <Text>{ this.props.user.login } opened this issue.</Text>
+          </View>
+
+          <Collapsible collapsed = { this.state.collapsed }>
+            <Text>{ this.props.body }</Text>
+          </Collapsible>
+
+          <Button
+            buttonStyle = { styles.buttonStyle }
+            onPress = { ()=> this._toggleExpanded() }
+            title = { this.state.collapsed ? 'SHOW ISSUE' : 'HIDE ISSUE' }
+          />
+      </Card>
     );
   }
 }
