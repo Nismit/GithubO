@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
+// const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
+const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +40,7 @@ export default class Feed extends Component {
   }
 
   showDetail(repository) {
-    this.props.navigation.navigate('Detail', { ...repository })
+    this.props.navigation.navigate('Detail', { ...repository });
   }
 
   fetchData() {
@@ -65,7 +66,7 @@ export default class Feed extends Component {
   }
 
   render() {
-    let load = this.state.loaded;
+    const load = this.state.loaded;
     if (!load) {
       return this.renderLoadingView();
     }
