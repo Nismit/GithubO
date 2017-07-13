@@ -56,6 +56,12 @@ export default class Detail extends Component {
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
+  dividedPullsFromIssues() {
+    for (var issue of this.state.issues) {
+      // console.log(issue.includes('pull_request'));
+    }
+  }
+
   fetchData(URL) {
     fetch(URL)
       .then(response => response.json())
@@ -63,16 +69,13 @@ export default class Detail extends Component {
         this.setState({
           issues: responseData,
         });
+        this.dividedPullsFromIssues();
       })
       .done();
   }
 
   showIssues(issues) {
     this.props.navigation.navigate('Issues', { issues: issues });
-  }
-
-  showPulls(pulls) {
-    this.props.navigation.navigate('Pulls', { pulls: pulls });
   }
 
   render() {
@@ -148,7 +151,7 @@ export default class Detail extends Component {
               title="Pull requests"
               badge={{ value: `${this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
               // hideChevron
-              onPress={() => this.showPulls(this.state.pulls)}
+              onPress={() => this.showIssues(this.state.pulls)}
             />
           </List>
       </ScrollView>
