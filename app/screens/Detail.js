@@ -45,45 +45,34 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
-    let { issues_url,
-      pulls_url,
-    } = this.props.navigation.state.params
+    const { issues_url } = this.props.navigation.state.params;
+    const ISSUES_URL = issues_url.replace(/{\/number}/, '');
 
-    issues_url = issues_url.replace(/{\/number}/, '');
-    pulls_url = pulls_url.replace(/{\/number}/, '');
+    console.log(ISSUES_URL);
 
     // get issue dara from api
-    this.fetchData(issues_url, true);
-    this.fetchData(pulls_url, false);
+    this.fetchData(ISSUES_URL);
   }
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
-  fetchData(URL, issueFlag) {
+  fetchData(URL) {
     fetch(URL)
-        .then((response) => response.json())
-        .then((responseData) => {
-          if (issueFlag === true) {
-            this.setState({
-              issues: responseData,
-            });
-            // console.log(this.state.issues);
-          } else {
-            this.setState({
-              pulls: responseData,
-            });
-            // console.log(this.state.pulls);
-          }
-        })
-        .done();
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({
+          issues: responseData,
+        });
+      })
+      .done();
   }
 
   showIssues(issues) {
-    this.props.navigation.navigate('Issues', { issues: issues })
+    this.props.navigation.navigate('Issues', { issues: issues });
   }
 
   showPulls(pulls) {
-    this.props.navigation.navigate('Pulls', { pulls: pulls })
+    this.props.navigation.navigate('Pulls', { pulls: pulls });
   }
 
   render() {
@@ -97,7 +86,7 @@ export default class Detail extends Component {
       open_issues,
       stargazers_count,
       forks_count
-    } = this.props.navigation.state.params
+    } = this.props.navigation.state.params;
 
     const lastCommitTime = moment(pushed_at).format('YYYY/MM/DD HH:mm');
 
