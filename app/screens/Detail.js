@@ -81,14 +81,14 @@ export default class Detail extends Component {
     console.log("reader");
     const { name,
       description,
-      watchers_count,
       created_at,
       pushed_at,
       homepage,
       language,
       open_issues,
       stargazers_count,
-      forks_count
+      forks_count,
+      watchers
     } = this.props.navigation.state.params;
 
     const lastCommitTime = moment(pushed_at).format('YYYY/MM/DD HH:mm');
@@ -103,7 +103,7 @@ export default class Detail extends Component {
             containerStyle={styles.listItem}
             titleStyle={styles.listTitle}
             title="Watch"
-            rightTitle={watchers_count !== 0 ? watchers_count.toString() : '0'}
+            rightTitle={watchers !== 0 ? watchers.toString() : '0'}
             hideChevron
           />
           <ListItem
