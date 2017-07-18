@@ -48,37 +48,37 @@ export default class Detail extends Component {
     const { issues_url } = this.props.navigation.state.params;
     const ISSUES_URL = issues_url.replace(/{\/number}/, '');
 
-    console.log(ISSUES_URL);
-
     // get issue dara from api
-    this.fetchData(ISSUES_URL);
-  }
+    // this.fetchData(ISSUES_URL);
 
-  // memo https://react-native-training.github.io/react-native-elements/API/lists/
-
-  dividedPullsFromIssues() {
-    for (var issue of this.state.issues) {
-      // console.log(issue.includes('pull_request'));
-    }
-  }
-
-  fetchData(URL) {
-    fetch(URL)
+    return fetch(ISSUES_URL)
       .then(response => response.json())
       .then((responseData) => {
+        const resIssues = [];
+        const resPulls = [];
+        for (const issue of responseData) {
+          if ('pull_request' in issue) {
+            resPulls.push(issue);
+          } else {
+            resIssues.push(issue);
+          }
+        }
         this.setState({
-          issues: responseData,
+          issues: resIssues,
+          pulls: resPulls,
         });
-        this.dividedPullsFromIssues();
       })
       .done();
   }
+
+  // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
   showIssues(issues) {
     this.props.navigation.navigate('Issues', { issues: issues });
   }
 
   render() {
+    console.log("reader");
     const { name,
       description,
       watchers_count,
@@ -136,24 +136,24 @@ export default class Detail extends Component {
           />
         </List>
 
-          <List>
-            <ListItem
-              containerStyle={styles.listItem}
-              titleStyle={styles.listTitle}
-              title="Issues"
-              badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
-              // hideChevron
-              onPress={() => this.showIssues(this.state.issues)}
-            />
-            <ListItem
-              containerStyle={styles.listItem}
-              titleStyle={styles.listTitle}
-              title="Pull requests"
-              badge={{ value: `${this.state.pulls.length !== 0 ? this.state.issues.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
-              // hideChevron
-              onPress={() => this.showIssues(this.state.pulls)}
-            />
-          </List>
+        <List>
+          <ListItem
+            containerStyle={styles.listItem}
+            titleStyle={styles.listTitle}
+            title="Issues"
+            badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+            // hideChevron
+            onPress={() => this.showIssues(this.state.issues)}
+          />
+          <ListItem
+            containerStyle={styles.listItem}
+            titleStyle={styles.listTitle}
+            title="Pull requests"
+            badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+            // hideChevron
+            onPress={() => this.showIssues(this.state.pulls)}
+          />
+        </List>
       </ScrollView>
     );
   }
