@@ -39,8 +39,8 @@ export default class Feed extends Component {
     this.fetchData();
   }
 
-  showDetail(repository) {
-    this.props.navigation.navigate('Detail', { ...repository });
+  showDetail(repoURL) {
+    this.props.navigation.navigate('Detail', { repoURL });
   }
 
   fetchData() {
@@ -80,7 +80,7 @@ export default class Feed extends Component {
               titleStyle={styles.listTitle}
               key={repository.id}
               title={repository.name}
-              onPress={() => this.showDetail(repository)}
+              onPress={() => this.showDetail(repository.url)}
             />
           ))}
         </List>

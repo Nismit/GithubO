@@ -12,9 +12,12 @@ export default StackNavigator({
   },
   Detail: {
     screen: Detail,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.name}`,
-    }),
+    navigationOptions: {
+      title: 'Detail',
+    },
+    // navigationOptions: ({ navigation }) => ({
+    //   title: `${navigation.state.params.name}`,
+    // }),
   },
   Issues: {
     screen: Issues,
