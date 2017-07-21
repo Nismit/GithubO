@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem, Grid, Col, Icon } from 'react-native-elements';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: 22,
+  },
+  loadContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadText: {
+    fontSize: 22,
   },
   section: {
     borderBottomWidth: 1,
@@ -32,41 +40,72 @@ const styles = StyleSheet.create({
   listTitle: {
     fontSize: 15,
   },
+  iconBox: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRightWidth: 0.8,
+    borderBottomWidth: 0.8,
+    paddingTop: 13,
+    paddingBottom: 13,
+  },
+  iconBoxLast: {
+    borderRightWidth: 0,
+  },
+  icon: {
+    width: 20,
+    marginRight: 10,
+  },
 });
 
 export default class Detail extends Component {
   constructor(props) {
     super(props);
+    this.getRepository();
     this.state = {
       issues: [],
       pulls: [],
+      data: [],
       loaded: false,
     };
   }
 
   componentDidMount() {
-    const { issues_url } = this.props.navigation.state.params;
-    const ISSUES_URL = issues_url.replace(/{\/number}/, '');
+    // const { issues_url } = this.props.navigation.state.params;
+    // const ISSUES_URL = issues_url.replace(/{\/number}/, '');
+    //
+    // // get issue dara from api
+    // // this.fetchData(ISSUES_URL);
+    //
+    // return fetch(ISSUES_URL)
+    //   .then(response => response.json())
+    //   .then((responseData) => {
+    //     const resIssues = [];
+    //     const resPulls = [];
+    //     for (const issue of responseData) {
+    //       if ('pull_request' in issue) {
+    //         resPulls.push(issue);
+    //       } else {
+    //         resIssues.push(issue);
+    //       }
+    //     }
+    //     this.setState({
+    //       issues: resIssues,
+    //       pulls: resPulls,
+    //     });
+    //   })
+    //   .done();
+  }
 
-    // get issue dara from api
-    // this.fetchData(ISSUES_URL);
-
-    return fetch(ISSUES_URL)
+  getRepository() {
+    return fetch(this.props.navigation.state.params.repoURL)
       .then(response => response.json())
       .then((responseData) => {
-        const resIssues = [];
-        const resPulls = [];
-        for (const issue of responseData) {
-          if ('pull_request' in issue) {
-            resPulls.push(issue);
-          } else {
-            resIssues.push(issue);
-          }
-        }
         this.setState({
-          issues: resIssues,
-          pulls: resPulls,
+          data: responseData,
+          loaded: true,
         });
+        console.log(this.state.data);
       })
       .done();
   }
@@ -74,11 +113,25 @@ export default class Detail extends Component {
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
   showIssues(issues) {
-    this.props.navigation.navigate('Issues', { issues: issues });
+    //this.props.navigation.navigate('Issues', { issues: issues });
+  }
+
+  renderLoadingView() {
+    return (
+      <View style={styles.loadContainer}>
+        <Text style={styles.loadText}>
+          Loading Repository...
+        </Text>
+      </View>
+    );
   }
 
   render() {
-    console.log("reader");
+    const load = this.state.loaded;
+    if (!load) {
+      return this.renderLoadingView();
+    }
+
     const { name,
       description,
       created_at,
@@ -86,10 +139,11 @@ export default class Detail extends Component {
       homepage,
       language,
       open_issues,
+      default_branch,
       stargazers_count,
       forks_count,
-      watchers
-    } = this.props.navigation.state.params;
+      subscribers_count
+    } = this.state.data;
 
     const lastCommitTime = moment(pushed_at).format('YYYY/MM/DD HH:mm');
 
@@ -99,39 +153,67 @@ export default class Detail extends Component {
           <View style={styles.section}>
             <Text style={styles.sectionText}>General</Text>
           </View>
-          <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
-            title="Watch"
-            rightTitle={watchers !== 0 ? watchers.toString() : '0'}
-            hideChevron
-          />
-          <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
-            title="Star"
-            rightTitle={stargazers_count !== 0 ? stargazers_count.toString() : '0'}
-            hideChevron
-          />
-          <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
-            title="Fork"
-            rightTitle={forks_count !== 0 ? forks_count.toString() : '0'}
-            hideChevron
-          />
-          <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
-            title="Language"
-            rightTitle={language}
-            hideChevron
-          />
+          <Grid>
+            <Col style={styles.iconBox}>
+              <Icon
+              style={styles.icon}
+              name='eye'
+              type='font-awesome'
+              size={16}
+              color='#24292e' />
+              <Text>{subscribers_count !== 0 ? subscribers_count.toString() : '0'}</Text>
+            </Col>
+            <Col style={styles.iconBox}>
+              <Icon
+              style={styles.icon}
+              name='star'
+              type='font-awesome'
+              size={16}
+              color='#24292e' />
+              <Text>{stargazers_count !== 0 ? stargazers_count.toString() : '0'}</Text>
+            </Col>
+            <Col style={[styles.iconBox, styles.iconBoxLast]}>
+              <Icon
+              style={styles.icon}
+              name='repo-forked'
+              type='octicon'
+              size={16}
+              color='#24292e' />
+              <Text>{forks_count !== 0 ? forks_count.toString() : '0'}</Text>
+            </Col>
+          </Grid>
+          <Grid>
+            <Col style={styles.iconBox}>
+              <Icon
+              style={styles.icon}
+              name='git-branch'
+              type='octicon'
+              size={16}
+              color='#24292e' />
+              <Text>{default_branch}</Text>
+            </Col>
+            <Col style={[styles.iconBox, styles.iconBoxLast]}>
+              <Icon
+              style={styles.icon}
+              name='code'
+              type='font-awesome'
+              size={16}
+              color='#24292e' />
+              <Text>{language}</Text>
+            </Col>
+          </Grid>
           <ListItem
             containerStyle={styles.listItem}
             titleStyle={styles.listTitle}
             title="Last Commit"
             rightTitle={lastCommitTime}
+            hideChevron
+          />
+          <ListItem
+            containerStyle={styles.listItem}
+            titleStyle={styles.listTitle}
+            title="README"
+            //rightTitle={lastCommitTime}
             hideChevron
           />
         </List>
