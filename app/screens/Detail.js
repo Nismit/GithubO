@@ -222,7 +222,7 @@ export default class Detail extends Component {
             containerStyle={styles.listItem}
             titleStyle={[styles.listTitle, styles.listTitleDescription]}
             title={
-              <View><Text>{description}</Text></View>
+              <View><Text>{description !== null ? description : 'No Description'}</Text></View>
             }
             //rightTitle={lastCommitTime}
             hideChevron
