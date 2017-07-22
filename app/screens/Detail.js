@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   section: {
     borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
+    borderBottomColor: '#cbd2d9',
     backgroundColor: '#00052A',
   },
   sectionText: {
@@ -34,20 +34,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   listItem: {
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 13,
+    paddingBottom: 13,
   },
   listTitle: {
     fontSize: 15,
+  },
+  listTitleDescription: {
+    fontSize: 17,
   },
   iconBox: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     borderRightWidth: 0.8,
-    borderBottomWidth: 0.8,
-    paddingTop: 13,
-    paddingBottom: 13,
+    borderRightColor: '#cbd2d9',
+    borderBottomWidth: 1,
+    borderBottomColor: '#cbd2d9',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   iconBoxLast: {
     borderRightWidth: 0,
@@ -55,6 +60,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     marginRight: 10,
+  },
+  iconText: {
+    fontSize: 16,
   },
 });
 
@@ -66,6 +74,7 @@ export default class Detail extends Component {
       issues: [],
       pulls: [],
       data: [],
+      contents: [],
       loaded: false,
     };
   }
@@ -103,11 +112,19 @@ export default class Detail extends Component {
       .then((responseData) => {
         this.setState({
           data: responseData,
-          loaded: true,
         });
-        console.log(this.state.data);
       })
-      .done();
+      .then(() => {
+        fetch(this.state.data.contents_url.replace(/\{\+path\}/, ''))
+          .then(response => response.json())
+          .then((responseData) => {
+            this.setState({
+              contents: responseData,
+              loaded: true,
+            });
+            console.log(this.state.contents);
+        }).done();
+      }).done();
   }
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
@@ -134,7 +151,6 @@ export default class Detail extends Component {
 
     const { name,
       description,
-      created_at,
       pushed_at,
       homepage,
       language,
@@ -161,7 +177,7 @@ export default class Detail extends Component {
               type='font-awesome'
               size={16}
               color='#24292e' />
-              <Text>{subscribers_count !== 0 ? subscribers_count.toString() : '0'}</Text>
+              <Text style={styles.iconText}>{subscribers_count !== 0 ? subscribers_count.toString() : '0'}</Text>
             </Col>
             <Col style={styles.iconBox}>
               <Icon
@@ -170,7 +186,7 @@ export default class Detail extends Component {
               type='font-awesome'
               size={16}
               color='#24292e' />
-              <Text>{stargazers_count !== 0 ? stargazers_count.toString() : '0'}</Text>
+              <Text style={styles.iconText}>{stargazers_count !== 0 ? stargazers_count.toString() : '0'}</Text>
             </Col>
             <Col style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
@@ -179,7 +195,7 @@ export default class Detail extends Component {
               type='octicon'
               size={16}
               color='#24292e' />
-              <Text>{forks_count !== 0 ? forks_count.toString() : '0'}</Text>
+              <Text style={styles.iconText}>{forks_count !== 0 ? forks_count.toString() : '0'}</Text>
             </Col>
           </Grid>
           <Grid>
@@ -190,7 +206,7 @@ export default class Detail extends Component {
               type='octicon'
               size={16}
               color='#24292e' />
-              <Text>{default_branch}</Text>
+              <Text style={styles.iconText}>{default_branch}</Text>
             </Col>
             <Col style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
@@ -199,14 +215,16 @@ export default class Detail extends Component {
               type='font-awesome'
               size={16}
               color='#24292e' />
-              <Text>{language}</Text>
+              <Text style={styles.iconText}>{language}</Text>
             </Col>
           </Grid>
           <ListItem
             containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
-            title="Last Commit"
-            rightTitle={lastCommitTime}
+            titleStyle={[styles.listTitle, styles.listTitleDescription]}
+            title={
+              <View><Text>{description}</Text></View>
+            }
+            //rightTitle={lastCommitTime}
             hideChevron
           />
           <ListItem
@@ -214,7 +232,7 @@ export default class Detail extends Component {
             titleStyle={styles.listTitle}
             title="README"
             //rightTitle={lastCommitTime}
-            hideChevron
+            // Memo https://api.github.com/repos/roots/sage/readme
           />
         </List>
 
@@ -223,7 +241,7 @@ export default class Detail extends Component {
             containerStyle={styles.listItem}
             titleStyle={styles.listTitle}
             title="Issues"
-            badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+            badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, containerStyle: { marginTop: 3 } }}
             // hideChevron
             onPress={() => this.showIssues(this.state.issues)}
           />
@@ -231,10 +249,21 @@ export default class Detail extends Component {
             containerStyle={styles.listItem}
             titleStyle={styles.listTitle}
             title="Pull requests"
-            badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, badgeTextStyle: { color: 'orange' }, badgeContainerStyle: { marginTop: -20 } }}
+            badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3 } }}
             // hideChevron
             onPress={() => this.showIssues(this.state.pulls)}
           />
+        </List>
+
+        <List>
+          { this.state.contents.map((content) => (
+            <ListItem
+              containerStyle={styles.listItem}
+              titleStyle={styles.listTitle}
+              key={content.sha}
+              title={content.name}
+            />
+          ))}
         </List>
       </ScrollView>
     );
