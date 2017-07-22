@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 export default class Detail extends Component {
   constructor(props) {
     super(props);
-    this.getRepository();
+    console.log('const');
     this.state = {
       issues: [],
       pulls: [],
@@ -80,30 +80,8 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
-    // const { issues_url } = this.props.navigation.state.params;
-    // const ISSUES_URL = issues_url.replace(/{\/number}/, '');
-    //
-    // // get issue dara from api
-    // // this.fetchData(ISSUES_URL);
-    //
-    // return fetch(ISSUES_URL)
-    //   .then(response => response.json())
-    //   .then((responseData) => {
-    //     const resIssues = [];
-    //     const resPulls = [];
-    //     for (const issue of responseData) {
-    //       if ('pull_request' in issue) {
-    //         resPulls.push(issue);
-    //       } else {
-    //         resIssues.push(issue);
-    //       }
-    //     }
-    //     this.setState({
-    //       issues: resIssues,
-    //       pulls: resPulls,
-    //     });
-    //   })
-    //   .done();
+    console.log('didmount');
+    this.getRepository();
   }
 
   getRepository() {
@@ -113,6 +91,7 @@ export default class Detail extends Component {
         this.setState({
           data: responseData,
         });
+        this.getIssues();
       })
       .then(() => {
         fetch(this.state.data.contents_url.replace(/\{\+path\}/, ''))
@@ -122,9 +101,30 @@ export default class Detail extends Component {
               contents: responseData,
               loaded: true,
             });
-            console.log(this.state.contents);
         }).done();
       }).done();
+  }
+
+  getIssues() {
+    console.log('getIssues');
+    return fetch(this.state.data.issues_url.replace(/\{\/number\}/, ''))
+      .then(response => response.json())
+      .then((responseData) => {
+        const resIssues = [];
+        const resPulls = [];
+        for (const issue of responseData) {
+          if ('pull_request' in issue) {
+            resPulls.push(issue);
+          } else {
+            resIssues.push(issue);
+          }
+        }
+        this.setState({
+          issues: resIssues,
+          pulls: resPulls,
+        });
+      })
+      .done();
   }
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
@@ -144,6 +144,7 @@ export default class Detail extends Component {
   }
 
   render() {
+    console.log('render');
     const load = this.state.loaded;
     if (!load) {
       return this.renderLoadingView();
