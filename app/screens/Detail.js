@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   listItem: {
-    paddingTop: 13,
-    paddingBottom: 13,
+    paddingTop: 11,
+    paddingBottom: 11,
   },
   listTitle: {
-    fontSize: 15,
+    fontSize: 16,
   },
   listTitleDescription: {
     fontSize: 17,
@@ -56,6 +56,11 @@ const styles = StyleSheet.create({
   },
   iconBoxLast: {
     borderRightWidth: 0,
+  },
+  listIcon: {
+    marginTop: 2,
+    marginRight: 8,
+    marginLeft: 6,
   },
   icon: {
     width: 20,
@@ -240,17 +245,31 @@ export default class Detail extends Component {
         <List>
           <ListItem
             containerStyle={styles.listItem}
+            leftIcon={
+              <Icon
+                style={styles.listIcon}
+                name="issue-opened"
+                type="octicon"
+                color="#FF3A3A" />
+            }
             titleStyle={styles.listTitle}
             title="Issues"
-            badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, containerStyle: { marginTop: 3 } }}
+            badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
             onPress={() => this.showIssues(this.state.issues)}
           />
           <ListItem
             containerStyle={styles.listItem}
+            leftIcon={
+              <Icon
+                style={styles.listIcon}
+                name="git-pull-request"
+                type="octicon"
+                color="#6f42c1" />
+            }
             titleStyle={styles.listTitle}
             title="Pull requests"
-            badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3 } }}
+            badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
             onPress={() => this.showIssues(this.state.pulls)}
           />
@@ -263,6 +282,20 @@ export default class Detail extends Component {
               titleStyle={styles.listTitle}
               key={content.sha}
               title={content.name}
+              leftIcon={
+                content.type === 'file' ?
+                <Icon
+                  style={styles.listIcon}
+                  name="file-text"
+                  type="octicon"
+                  color="rgba(3,47,98,0.5)" />
+                :
+                <Icon
+                  style={styles.listIcon}
+                  name="file-directory"
+                  type="octicon"
+                  color="rgba(3,47,98,0.5)" />
+              }
             />
           ))}
         </List>
