@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import Feed from '../screens/Feed';
 import Detail from '../screens/Detail';
 import Issues from '../screens/Issues';
+import Webview from '../screens/Webview';
 
 export default StackNavigator({
   Feed: {
@@ -27,5 +28,11 @@ export default StackNavigator({
     // navigationOptions: ({ navigation }) => ({
     //   title: 'Issues',
     // }),
+  },
+  Webview: {
+    screen: Webview,
+    navigationOptions: {
+      title: 'WebView',
+    },
   },
 });

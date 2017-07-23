@@ -135,7 +135,11 @@ export default class Detail extends Component {
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
   showIssues(issues) {
-    //this.props.navigation.navigate('Issues', { issues: issues });
+    this.props.navigation.navigate('Issues', { issues: issues });
+  }
+
+  openWebView(url) {
+    this.props.navigation.navigate('Webview', { url });
   }
 
   renderLoadingView() {
@@ -238,6 +242,7 @@ export default class Detail extends Component {
             titleStyle={styles.listTitle}
             title="README"
             //rightTitle={lastCommitTime}
+            onPress={() => this.openWebView('test')}
             // Memo https://api.github.com/repos/roots/sage/readme
           />
         </List>
