@@ -242,7 +242,7 @@ export default class Detail extends Component {
             titleStyle={styles.listTitle}
             title="README"
             //rightTitle={lastCommitTime}
-            onPress={() => this.openWebView('test')}
+            onPress={() => this.openWebView(this.props.navigation.state.params.repoURL + '/readme')}
             // Memo https://api.github.com/repos/roots/sage/readme
           />
         </List>
