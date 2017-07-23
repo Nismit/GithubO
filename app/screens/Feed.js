@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 0,
+    backgroundColor: '#ffffff',
   },
   listItem: {
     paddingTop: 12,
