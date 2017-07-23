@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import IssueCard from '../components/IssueCard';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { List, ListItem, Icon } from 'react-native-elements';
+// import IssueCard from '../components/IssueCard';
+
+const styles = StyleSheet.create({
+  listContainer: {
+    marginTop: 0,
+    backgroundColor: '#ffffff',
+  },
+  listItem: {
+    paddingTop: 11,
+    paddingBottom: 11,
+  },
+  listTitle: {
+    fontSize: 16,
+  },
+  listTitleDescription: {
+    fontSize: 17,
+  },
+});
 
 export default class Issues extends Component {
   constructor(props) {
@@ -38,12 +56,19 @@ export default class Issues extends Component {
   render() {
     return (
       <ScrollView>
-        { this.props.navigation.state.params.issues.map((issue) => (
-          <IssueCard
-            key={issue.id}
-            {...issue}
-          />
-        ))}
+        <List style={styles.listContainer}>
+          { this.props.navigation.state.params.issues.map((issue) => (
+            <ListItem
+              //containerStyle={styles.listItem}
+              key={issue.id}
+              titleStyle={styles.listTitle}
+              title={issue.title}
+              subtitle={'#' + issue.number + ' by '+ issue.user.login }
+              //rightTitle={lastCommitTime}
+              hideChevron
+            />
+          ))}
+        </List>
       </ScrollView>
     );
   }
