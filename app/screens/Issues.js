@@ -28,7 +28,6 @@ export default class Issues extends Component {
 
     this.state = {
       pullRequest: this.props.navigation.state.params.type === 'pull_request',
-      //this.props.navigation.state.params.issues.length > 0 && 'pull_request' in this.props.navigation.state.params.issues[0],
     };
   }
 
