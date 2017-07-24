@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Grid, Col, Icon } from 'react-native-elements';
+import Loader from '../components/Loader/Loader';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
@@ -8,14 +9,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: 22,
-  },
-  loadContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadText: {
-    fontSize: 22,
   },
   section: {
     borderBottomWidth: 1,
@@ -142,21 +135,11 @@ export default class Detail extends Component {
     this.props.navigation.navigate('Webview', { url });
   }
 
-  renderLoadingView() {
-    return (
-      <View style={styles.loadContainer}>
-        <Text style={styles.loadText}>
-          Loading Repository...
-        </Text>
-      </View>
-    );
-  }
-
   render() {
     console.log('render');
     const load = this.state.loaded;
     if (!load) {
-      return this.renderLoadingView();
+      return <Loader />;
     }
 
     const { name,
