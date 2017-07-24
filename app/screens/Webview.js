@@ -28,8 +28,6 @@ export default class Webview extends Component {
   }
 
   componentDidMount() {
-    console.log('didmount');
-
     return fetch(this.props.navigation.state.params.url)
       .then((response) => response.json())
       .then((responseData) => {
@@ -37,7 +35,6 @@ export default class Webview extends Component {
           data: responseData,
           loaded: true,
         });
-        console.log(this.state.data);
       })
       .done();
   }
