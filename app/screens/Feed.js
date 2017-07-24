@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import Loader from '../components/Loader/Loader';
 
 // const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadText: {
-    fontSize: 22,
-  },
   listContainer: {
     marginTop: 0,
     backgroundColor: '#ffffff',
@@ -58,11 +51,7 @@ export default class Feed extends Component {
 
   renderLoadingView() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.loadText}>
-          Loading Repositories...
-        </Text>
-      </View>
+      <Loader />
     );
   }
 
