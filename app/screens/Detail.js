@@ -1,9 +1,9 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
 import ListStyle from './styles';
 import Loader from '../components/Loader/Loader';
-import moment from 'moment';
 
 const styles = StyleSheet.create({
   section: {
