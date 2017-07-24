@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
+import ListStyle from './styles';
 import Loader from '../components/Loader/Loader';
 import moment from 'moment';
 
@@ -10,10 +11,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#cbd2d9',
     backgroundColor: '#00052A',
   },
-  flex: {
-    flex: 1,
-    flexDirection: 'row',
-  },
   sectionText: {
     fontWeight: 'bold',
     paddingTop: 10,
@@ -21,16 +18,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#ffffff',
   },
-  listContainer: {
-    marginTop: 0,
-    backgroundColor: '#ffffff',
-  },
-  listItem: {
-    paddingTop: 11,
-    paddingBottom: 11,
-  },
-  listTitle: {
-    fontSize: 16,
+  flex: {
+    flex: 1,
+    flexDirection: 'row',
   },
   listTitleDescription: {
     fontSize: 17,
@@ -48,11 +38,6 @@ const styles = StyleSheet.create({
   },
   iconBoxLast: {
     borderRightWidth: 0,
-  },
-  listIcon: {
-    marginTop: 2,
-    marginRight: 8,
-    marginLeft: 6,
   },
   icon: {
     width: 20,
@@ -149,7 +134,7 @@ export default class Detail extends Component {
 
     return (
       <ScrollView>
-        <List style={styles.listContainer}>
+        <List style={ListStyle.listContainer}>
           <View style={styles.section}>
             <Text style={styles.sectionText}>General</Text>
           </View>
@@ -208,8 +193,8 @@ export default class Detail extends Component {
             </View>
           </View>
           <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={[styles.listTitle, styles.listTitleDescription]}
+            containerStyle={ListStyle.listItem}
+            titleStyle={[ListStyle.listTitle, styles.listTitleDescription]}
             title={
               <View><Text>{description !== null ? description : 'No Description'}</Text></View>
             }
@@ -217,8 +202,8 @@ export default class Detail extends Component {
             hideChevron
           />
           <ListItem
-            containerStyle={styles.listItem}
-            titleStyle={styles.listTitle}
+            containerStyle={ListStyle.listItem}
+            titleStyle={ListStyle.listTitle}
             title="README"
             //rightTitle={lastCommitTime}
             onPress={() => this.openWebView(this.props.navigation.state.params.repoURL + '/readme')}
@@ -228,32 +213,32 @@ export default class Detail extends Component {
 
         <List>
           <ListItem
-            containerStyle={styles.listItem}
+            containerStyle={ListStyle.listItem}
             leftIcon={
               <Icon
-                style={styles.listIcon}
+                style={ListStyle.listIcon}
                 name="issue-opened"
                 type="octicon"
                 color="#FF3A3A"
               />
             }
-            titleStyle={styles.listTitle}
+            titleStyle={ListStyle.listTitle}
             title="Issues"
             badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
             onPress={() => this.showIssues()}
           />
           <ListItem
-            containerStyle={styles.listItem}
+            containerStyle={ListStyle.listItem}
             leftIcon={
               <Icon
-                style={styles.listIcon}
+                style={ListStyle.listIcon}
                 name="git-pull-request"
                 type="octicon"
                 color="#6f42c1"
               />
             }
-            titleStyle={styles.listTitle}
+            titleStyle={ListStyle.listTitle}
             title="Pull requests"
             badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
@@ -264,21 +249,21 @@ export default class Detail extends Component {
         <List>
           { this.state.contents.map((content) => (
             <ListItem
-              containerStyle={styles.listItem}
-              titleStyle={styles.listTitle}
+              containerStyle={ListStyle.listItem}
+              titleStyle={ListStyle.listTitle}
               key={content.sha}
               title={content.name}
               leftIcon={
                 content.type === 'file' ?
                   <Icon
-                    style={styles.listIcon}
+                    style={ListStyle.listIcon}
                     name="file-text"
                     type="octicon"
                     color="rgba(3,47,98,0.5)"
                   />
                 :
                   <Icon
-                    style={styles.listIcon}
+                    style={ListStyle.listIcon}
                     name="file-directory"
                     type="octicon"
                     color="rgba(3,47,98,0.5)"

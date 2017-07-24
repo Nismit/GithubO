@@ -1,26 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
-// import IssueCard from '../components/IssueCard';
-
-const styles = StyleSheet.create({
-  listContainer: {
-    marginTop: 0,
-    backgroundColor: '#ffffff',
-  },
-  listItem: {
-    paddingTop: 11,
-    paddingBottom: 11,
-  },
-  listTitle: {
-    fontSize: 16,
-  },
-  listIcon: {
-    marginTop: 2,
-    marginRight: 8,
-    marginLeft: 6,
-  },
-});
+import ListStyle from './styles';
 
 export default class Issues extends Component {
   constructor(props) {
@@ -38,25 +19,25 @@ export default class Issues extends Component {
   render() {
     const icon = this.state.pullRequest
     ? <Icon
-      style={styles.listIcon}
+      style={ListStyle.listIcon}
       name="git-pull-request"
       type="octicon"
       color="#6f42c1" />
     : <Icon
-      style={styles.listIcon}
+      style={ListStyle.listIcon}
       name="issue-opened"
       type="octicon"
       color="#FF3A3A" />;
 
     return (
       <ScrollView>
-        <List style={styles.listContainer}>
+        <List style={ListStyle.listContainer}>
           { this.props.navigation.state.params.issues.map((issue) => (
             <ListItem
-              containerStyle={styles.listItem}
+              containerStyle={ListStyle.listItem}
               key={issue.id}
               leftIcon={icon}
-              titleStyle={styles.listTitle}
+              titleStyle={ListStyle.listTitle}
               title={issue.title}
               subtitle={'#' + issue.number + ' by '+ issue.user.login}
             />

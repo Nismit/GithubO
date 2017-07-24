@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import Loader from '../components/Loader/Loader';
+import ListStyle from './styles';
 
 // const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
-
-const styles = StyleSheet.create({
-  listContainer: {
-    marginTop: 0,
-    backgroundColor: '#ffffff',
-  },
-  listItem: {
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
-  listTitle: {
-    fontSize: 15,
-  },
-});
 
 export default class Feed extends Component {
   constructor(props) {
@@ -57,11 +44,11 @@ export default class Feed extends Component {
 
     return (
       <ScrollView>
-        <List style={styles.listContainer}>
+        <List style={ListStyle.listContainer}>
           { this.state.repositories.map((repository) => (
             <ListItem
-              containerStyle={styles.listItem}
-              titleStyle={styles.listTitle}
+              containerStyle={ListStyle.listItem}
+              titleStyle={ListStyle.listTitle}
               key={repository.id}
               title={repository.name}
               onPress={() => this.showDetail(repository.url)}
