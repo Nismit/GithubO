@@ -1,21 +1,6 @@
 import React, { Component } from 'react';
-import { WebView, StyleSheet, Text, View } from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 22,
-  },
-  loadContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadText: {
-    fontSize: 22,
-  },
-});
+import { WebView } from 'react-native';
+import Loader from '../components/Loader/Loader';
 
 export default class Webview extends Component {
   constructor(props) {
@@ -39,20 +24,10 @@ export default class Webview extends Component {
       .done();
   }
 
-  renderLoadingView() {
-    return (
-      <View style={styles.loadContainer}>
-        <Text style={styles.loadText}>
-          Loading...
-        </Text>
-      </View>
-    );
-  }
-
   render() {
     const load = this.state.loaded;
     if (!load) {
-      return this.renderLoadingView();
+      return <Loader />;
     }
 
     return (
