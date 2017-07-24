@@ -7,7 +7,7 @@ This app can be seen repositories, you can change API URL for yours.
 - Node (v8.0.0)
 - npm (v4.6.1)
 - react-native-cli (v2.0.1)
-- react-native (v0.46.1)
+- react-native (v0.46.4)
 
 ## Usage
 ```bash
