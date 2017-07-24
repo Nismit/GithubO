@@ -49,16 +49,10 @@ export default class Feed extends Component {
       .done();
   }
 
-  renderLoadingView() {
-    return (
-      <Loader />
-    );
-  }
-
   render() {
     const load = this.state.loaded;
     if (!load) {
-      return this.renderLoadingView();
+      return <Loader />;
     }
 
     return (
