@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { List, ListItem, Grid, Col, Icon } from 'react-native-elements';
+import { List, ListItem, Icon } from 'react-native-elements';
 import Loader from '../components/Loader/Loader';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 22,
-  },
   section: {
     borderBottomWidth: 1,
     borderBottomColor: '#cbd2d9',
     backgroundColor: '#00052A',
+  },
+  flex: {
+    flex: 1,
+    flexDirection: 'row',
   },
   sectionText: {
     fontWeight: 'bold',
@@ -108,18 +107,9 @@ export default class Detail extends Component {
     return fetch(this.state.data.issues_url.replace(/\{\/number\}/, ''))
       .then(response => response.json())
       .then((responseData) => {
-        const resIssues = [];
-        const resPulls = [];
-        for (const issue of responseData) {
-          if ('pull_request' in issue) {
-            resPulls.push(issue);
-          } else {
-            resIssues.push(issue);
-          }
-        }
         this.setState({
-          issues: resIssues,
-          pulls: resPulls,
+          issues: responseData.filter(d => !('pull_request' in d)),
+          pulls: responseData.filter(d => 'pull_request' in d),
         });
       })
       .done();
@@ -127,8 +117,12 @@ export default class Detail extends Component {
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
-  showIssues(issues) {
-    this.props.navigation.navigate('Issues', { issues: issues });
+  showIssues() {
+    this.props.navigation.navigate('Issues', { issues: this.state.issues, type: 'issue' });
+  }
+
+  showPR() {
+    this.props.navigation.navigate('Issues', { issues: this.state.pulls, type: 'pull_request' });
   }
 
   openWebView(url) {
@@ -162,8 +156,8 @@ export default class Detail extends Component {
           <View style={styles.section}>
             <Text style={styles.sectionText}>General</Text>
           </View>
-          <Grid>
-            <Col style={styles.iconBox}>
+          <View style={styles.flex}>
+            <View style={styles.iconBox}>
               <Icon
               style={styles.icon}
               name='eye'
@@ -171,8 +165,8 @@ export default class Detail extends Component {
               size={16}
               color='#24292e' />
               <Text style={styles.iconText}>{subscribers_count !== 0 ? subscribers_count.toString() : '0'}</Text>
-            </Col>
-            <Col style={styles.iconBox}>
+            </View>
+            <View style={styles.iconBox}>
               <Icon
               style={styles.icon}
               name='star'
@@ -180,8 +174,8 @@ export default class Detail extends Component {
               size={16}
               color='#24292e' />
               <Text style={styles.iconText}>{stargazers_count !== 0 ? stargazers_count.toString() : '0'}</Text>
-            </Col>
-            <Col style={[styles.iconBox, styles.iconBoxLast]}>
+            </View>
+            <View style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
               style={styles.icon}
               name='repo-forked'
@@ -189,10 +183,10 @@ export default class Detail extends Component {
               size={16}
               color='#24292e' />
               <Text style={styles.iconText}>{forks_count !== 0 ? forks_count.toString() : '0'}</Text>
-            </Col>
-          </Grid>
-          <Grid>
-            <Col style={styles.iconBox}>
+            </View>
+          </View>
+          <View style={styles.flex}>
+            <View style={styles.iconBox}>
               <Icon
               style={styles.icon}
               name='git-branch'
@@ -200,8 +194,8 @@ export default class Detail extends Component {
               size={16}
               color='#24292e' />
               <Text style={styles.iconText}>{default_branch}</Text>
-            </Col>
-            <Col style={[styles.iconBox, styles.iconBoxLast]}>
+            </View>
+            <View style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
               style={styles.icon}
               name='code'
@@ -209,8 +203,8 @@ export default class Detail extends Component {
               size={16}
               color='#24292e' />
               <Text style={styles.iconText}>{language}</Text>
-            </Col>
-          </Grid>
+            </View>
+          </View>
           <ListItem
             containerStyle={styles.listItem}
             titleStyle={[styles.listTitle, styles.listTitleDescription]}
@@ -244,7 +238,7 @@ export default class Detail extends Component {
             title="Issues"
             badge={{ value: `${this.state.issues.length !== 0 ? this.state.issues.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
-            onPress={() => this.showIssues(this.state.issues)}
+            onPress={() => this.showIssues()}
           />
           <ListItem
             containerStyle={styles.listItem}
@@ -259,7 +253,7 @@ export default class Detail extends Component {
             title="Pull requests"
             badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
-            onPress={() => this.showIssues(this.state.pulls)}
+            onPress={() => this.showPR()}
           />
         </List>
 

@@ -23,7 +23,7 @@ export default StackNavigator({
   Issues: {
     screen: Issues,
     navigationOptions: ({ navigation }) => ({
-      title: `${'pull_request' in navigation.state.params.issues[0] ? 'Pull Request' : 'Issues'}`,
+      title: navigation.state.params.type === 'pull_request' ? 'Pull Request' : 'Issues',
     }),
   },
   Webview: {
