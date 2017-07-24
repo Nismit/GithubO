@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 export default class Detail extends Component {
   constructor(props) {
     super(props);
-    console.log('const');
+
     this.state = {
       issues: [],
       pulls: [],
@@ -77,7 +77,6 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
-    console.log('didmount');
     this.getRepository();
   }
 
@@ -98,12 +97,13 @@ export default class Detail extends Component {
               contents: responseData,
               loaded: true,
             });
-        }).done();
-      }).done();
+          })
+        .done();
+      })
+      .done();
   }
 
   getIssues() {
-    console.log('getIssues');
     return fetch(this.state.data.issues_url.replace(/\{\/number\}/, ''))
       .then(response => response.json())
       .then((responseData) => {
@@ -130,22 +130,19 @@ export default class Detail extends Component {
   }
 
   render() {
-    console.log('render');
     const load = this.state.loaded;
     if (!load) {
       return <Loader />;
     }
 
-    const { name,
-      description,
+    const { description,
       pushed_at,
       homepage,
       language,
-      open_issues,
       default_branch,
       stargazers_count,
       forks_count,
-      subscribers_count
+      subscribers_count,
     } = this.state.data;
 
     const lastCommitTime = moment(pushed_at).format('YYYY/MM/DD HH:mm');
@@ -159,49 +156,54 @@ export default class Detail extends Component {
           <View style={styles.flex}>
             <View style={styles.iconBox}>
               <Icon
-              style={styles.icon}
-              name='eye'
-              type='font-awesome'
-              size={16}
-              color='#24292e' />
+                style={styles.icon}
+                name="eye"
+                type="font-awesome"
+                size={16}
+                color="#24292e"
+              />
               <Text style={styles.iconText}>{subscribers_count !== 0 ? subscribers_count.toString() : '0'}</Text>
             </View>
             <View style={styles.iconBox}>
               <Icon
-              style={styles.icon}
-              name='star'
-              type='font-awesome'
-              size={16}
-              color='#24292e' />
+                style={styles.icon}
+                name="star"
+                type="font-awesome"
+                size={16}
+                color="#24292e"
+              />
               <Text style={styles.iconText}>{stargazers_count !== 0 ? stargazers_count.toString() : '0'}</Text>
             </View>
             <View style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
-              style={styles.icon}
-              name='repo-forked'
-              type='octicon'
-              size={16}
-              color='#24292e' />
+                style={styles.icon}
+                name="repo-forked"
+                type="octicon"
+                size={16}
+                color="#24292e"
+              />
               <Text style={styles.iconText}>{forks_count !== 0 ? forks_count.toString() : '0'}</Text>
             </View>
           </View>
           <View style={styles.flex}>
             <View style={styles.iconBox}>
               <Icon
-              style={styles.icon}
-              name='git-branch'
-              type='octicon'
-              size={16}
-              color='#24292e' />
+                style={styles.icon}
+                name="git-branch"
+                type="octicon"
+                size={16}
+                color="#24292e"
+              />
               <Text style={styles.iconText}>{default_branch}</Text>
             </View>
             <View style={[styles.iconBox, styles.iconBoxLast]}>
               <Icon
-              style={styles.icon}
-              name='code'
-              type='font-awesome'
-              size={16}
-              color='#24292e' />
+                style={styles.icon}
+                name="code"
+                type="font-awesome"
+                size={16}
+                color="#24292e"
+              />
               <Text style={styles.iconText}>{language}</Text>
             </View>
           </View>
@@ -232,7 +234,8 @@ export default class Detail extends Component {
                 style={styles.listIcon}
                 name="issue-opened"
                 type="octicon"
-                color="#FF3A3A" />
+                color="#FF3A3A"
+              />
             }
             titleStyle={styles.listTitle}
             title="Issues"
@@ -247,7 +250,8 @@ export default class Detail extends Component {
                 style={styles.listIcon}
                 name="git-pull-request"
                 type="octicon"
-                color="#6f42c1" />
+                color="#6f42c1"
+              />
             }
             titleStyle={styles.listTitle}
             title="Pull requests"
@@ -266,17 +270,19 @@ export default class Detail extends Component {
               title={content.name}
               leftIcon={
                 content.type === 'file' ?
-                <Icon
-                  style={styles.listIcon}
-                  name="file-text"
-                  type="octicon"
-                  color="rgba(3,47,98,0.5)" />
+                  <Icon
+                    style={styles.listIcon}
+                    name="file-text"
+                    type="octicon"
+                    color="rgba(3,47,98,0.5)"
+                  />
                 :
-                <Icon
-                  style={styles.listIcon}
-                  name="file-directory"
-                  type="octicon"
-                  color="rgba(3,47,98,0.5)" />
+                  <Icon
+                    style={styles.listIcon}
+                    name="file-directory"
+                    type="octicon"
+                    color="rgba(3,47,98,0.5)"
+                  />
               }
             />
           ))}
