@@ -33,26 +33,6 @@ export default class Issues extends Component {
 
   }
 
-  // fetchData(URL, issueFlag ) {
-  //   fetch(URL)
-  //       .then((response) => response.json())
-  //       .then((responseData) => {
-  //         if( issueFlag === true ) {
-  //           this.setState({
-  //             issues: responseData,
-  //           })
-  //           //console.log(this.state.issues);
-  //         } else {
-  //           this.setState({
-  //             pulls: responseData,
-  //           })
-  //           //console.log(this.state.pulls);
-  //         }
-  //
-  //       })
-  //       .done()
-  // }
-
   render() {
     return (
       <ScrollView>
@@ -64,7 +44,6 @@ export default class Issues extends Component {
               titleStyle={styles.listTitle}
               title={issue.title}
               subtitle={'#' + issue.number + ' by '+ issue.user.login }
-              //rightTitle={lastCommitTime}
               hideChevron
             />
           ))}
