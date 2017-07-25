@@ -16,9 +16,6 @@ export default StackNavigator({
     navigationOptions: {
       title: 'Detail',
     },
-    // navigationOptions: ({ navigation }) => ({
-    //   title: `${navigation.state.params.name}`,
-    // }),
   },
   Issues: {
     screen: Issues,
