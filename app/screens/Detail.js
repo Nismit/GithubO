@@ -239,7 +239,7 @@ export default class Detail extends Component {
               />
             }
             titleStyle={ListStyle.listTitle}
-            title="Pull requests"
+            title="Pull Requests"
             badge={{ value: `${this.state.pulls.length !== 0 ? this.state.pulls.length.toString() : '0'}`, containerStyle: { marginTop: 3.5 } }}
             // hideChevron
             onPress={() => this.showPR()}
