@@ -16,6 +16,10 @@ export default class Issues extends Component {
 
   }
 
+  showIssue(issue) {
+    this.props.navigation.navigate('IssueDetail', { issue });
+  }
+
   render() {
     const icon = this.state.pullRequest
     ? <Icon
@@ -40,6 +44,7 @@ export default class Issues extends Component {
               titleStyle={ListStyle.listTitle}
               title={issue.title}
               subtitle={'#' + issue.number + ' by '+ issue.user.login}
+              onPress={() => this.showIssue(issue)}
             />
           ))}
         </List>

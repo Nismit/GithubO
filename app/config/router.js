@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import Feed from '../screens/Feed';
 import Detail from '../screens/Detail';
 import Issues from '../screens/Issues';
+import IssueDetail from '../screens/IssueDetail';
 import Webview from '../screens/Webview';
 
 export default StackNavigator({
@@ -22,6 +23,15 @@ export default StackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.type === 'pull_request' ? 'Pull Request' : 'Issues',
     }),
+  },
+  IssueDetail: {
+    screen: IssueDetail,
+    navigationOptions: {
+      title: 'Detail',
+    },
+    // navigationOptions: ({ navigation }) => ({
+    //   title: navigation.state.params.type === 'pull_request' ? 'Pull Request' : 'Issues',
+    // }),
   },
   Webview: {
     screen: Webview,
