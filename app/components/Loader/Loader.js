@@ -7,7 +7,7 @@ export default class Loader extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.loadText}>
-          Loading Repositories...
+          Loading...
         </Text>
       </View>
     );
