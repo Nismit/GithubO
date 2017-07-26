@@ -110,6 +110,10 @@ export default class Detail extends Component {
     this.props.navigation.navigate('Issues', { issues: this.state.pulls, type: 'pull_request' });
   }
 
+  showCode(url) {
+    this.props.navigation.navigate('Code', { url });
+  }
+
   openWebView(url) {
     this.props.navigation.navigate('Webview', { url });
   }
@@ -248,28 +252,37 @@ export default class Detail extends Component {
 
         <List>
           { this.state.contents.map((content) => (
-            <ListItem
-              containerStyle={ListStyle.listItem}
-              titleStyle={ListStyle.listTitle}
-              key={content.sha}
-              title={content.name}
-              leftIcon={
-                content.type === 'file' ?
+            content.type === 'file' ?
+              <ListItem
+                containerStyle={ListStyle.listItem}
+                titleStyle={ListStyle.listTitle}
+                key={content.sha}
+                title={content.name}
+                onPress={() => this.showCode(content.download_url)}
+                leftIcon={
                   <Icon
                     style={ListStyle.listIcon}
                     name="file-text"
                     type="octicon"
                     color="rgba(3,47,98,0.5)"
                   />
-                :
+                }
+              />
+            :
+              <ListItem
+                containerStyle={ListStyle.listItem}
+                titleStyle={ListStyle.listTitle}
+                key={content.sha}
+                title={content.name}
+                leftIcon={
                   <Icon
                     style={ListStyle.listIcon}
                     name="file-directory"
                     type="octicon"
                     color="rgba(3,47,98,0.5)"
                   />
-              }
-            />
+                }
+              />
           ))}
         </List>
       </ScrollView>
