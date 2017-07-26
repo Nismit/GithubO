@@ -7,72 +7,24 @@ import ListStyle from './styles';
 import Loader from '../components/Loader/Loader';
 
 const styles = StyleSheet.create({
-  section: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#cbd2d9',
-    backgroundColor: '#00052A',
-  },
-  sectionText: {
-    fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    color: '#ffffff',
-  },
   flex: {
     flex: 1,
     flexDirection: 'row',
   },
-  listTitleDescription: {
-    fontSize: 17,
-  },
   iconBox: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    borderRightWidth: 0.8,
-    borderRightColor: '#cbd2d9',
-    borderBottomWidth: 1,
-    borderBottomColor: '#cbd2d9',
     paddingTop: 10,
     paddingBottom: 10,
-  },
-  iconBoxLast: {
-    borderRightWidth: 0,
+    marginLeft: 10,
+    marginRight: 10,
   },
   icon: {
-    width: 20,
-    marginRight: 10,
+    width: 10,
   },
   iconText: {
     fontSize: 16,
-  },
-});
-
-const htmlStyles = StyleSheet.create({
-  h2: {
-    fontSize: 20,
-    margin: 0,
-    marginBottom: 0,
-    padding: 0,
-  },
-  p: {
-    margin: 0,
-    marginBottom: 0,
-    padding: 0,
-  },
-  ul: {
-    margin: 5,
-    marginBottom: 0,
-    padding: 0,
-  },
-  li: {
-    margin: 5,
-    padding: 0,
-  },
-  hr: {
-    margin: 0,
-    padding: 0,
+    paddingRight: 10,
   },
 });
 
