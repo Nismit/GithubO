@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingRight: 10,
   },
+  basic: {
+    backgroundColor: '#fff',
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 15,
+  },
 });
 
 export default class IssueDetail extends Component {
@@ -65,6 +72,8 @@ export default class IssueDetail extends Component {
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
   render() {
+    const body = this.props.navigation.state.params.issue.body;
+
     const icon = this.state.pullRequest
     ? <Icon
       style={ListStyle.listIcon}
@@ -85,6 +94,7 @@ export default class IssueDetail extends Component {
             <Text style={styles.iconText}>{this.props.navigation.state.params.issue.title}</Text>
           </View>
         </View>
+        <View style={styles.basic}><Text>{body}</Text></View>
         <List style={ListStyle.listContainer}>
           <ListItem
             containerStyle={ListStyle.listItem}
@@ -92,7 +102,6 @@ export default class IssueDetail extends Component {
             title="test"
             onPress={() => this.fetchData()}
           />
-          <View><Text>{this.props.navigation.state.params.issue.body}</Text></View>
         </List>
       </ScrollView>
     );
