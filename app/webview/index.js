@@ -14,7 +14,7 @@ export default class Webview extends Component {
 
   componentDidMount() {
     return fetch(this.props.navigation.state.params.url)
-      .then((response) => response.json())
+      .then(response => response.json())
       .then((responseData) => {
         this.setState({
           data: responseData,

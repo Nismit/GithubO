@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import Loader from '../components/Loader/Loader';
-import ListStyle from './styles';
+import ListStyle from '../utils/styles/lists';
 
 // const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
 
-export default class Feed extends Component {
+export default class Repositories extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       repositories: [],
       loaded: false,
@@ -17,23 +18,18 @@ export default class Feed extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
-  }
-
-  showDetail(repoURL) {
-    this.props.navigation.navigate('Detail', { repoURL });
-  }
-
-  fetchData() {
-    fetch(API_URL)
-      .then((response) => response.json())
+    return fetch(API_URL)
+      .then(response => response.json())
       .then((responseData) => {
         this.setState({
           repositories: responseData,
           loaded: true,
         });
-      })
-      .done();
+      }).done();
+  }
+
+  showDetail(repoURL) {
+    this.props.navigation.navigate('Repository', { repoURL });
   }
 
   render() {
@@ -45,7 +41,7 @@ export default class Feed extends Component {
     return (
       <ScrollView>
         <List style={ListStyle.listContainer}>
-          { this.state.repositories.map((repository) => (
+          { this.state.repositories.map(repository => (
             <ListItem
               containerStyle={ListStyle.listItem}
               titleStyle={ListStyle.listTitle}

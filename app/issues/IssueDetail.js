@@ -3,7 +3,7 @@ import HTMLView from 'react-native-htmlview';
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
-import ListStyle from './styles';
+import ListStyle from '../utils/styles/lists';
 import Loader from '../components/Loader/Loader';
 
 const styles = StyleSheet.create({

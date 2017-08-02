@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
-import ListStyle from './styles';
+import ListStyle from '../utils/styles/lists';
 
 export default class Issues extends Component {
   constructor(props) {

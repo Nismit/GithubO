@@ -2,23 +2,23 @@ import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import Feed from '../screens/Feed';
-import Detail from '../screens/Detail';
-import Issues from '../screens/Issues';
-import IssueDetail from '../screens/IssueDetail';
-import Code from '../screens/Code';
-import Webview from '../screens/Webview';
-import Settings from '../screens/Settings';
+import Repositories from '../repository/Repositories';
+import Repository from '../repository/Repository';
+import Issues from '../issues/Issues';
+import IssueDetail from '../issues/IssueDetail';
+import Code from '../codeview/index';
+import Webview from '../webview/index';
+import Settings from '../settings/index';
 
-export const FeedStack = StackNavigator({
-  Feed: {
-    screen: Feed,
+export const RepositoryStack = StackNavigator({
+  Repositories: {
+    screen: Repositories,
     navigationOptions: {
       title: 'Repository List',
     },
   },
-  Detail: {
-    screen: Detail,
+  Repository: {
+    screen: Repository,
     navigationOptions: {
       title: 'Detail',
     },
@@ -47,7 +47,7 @@ export const FeedStack = StackNavigator({
   Webview: {
     screen: Webview,
     navigationOptions: {
-      title: 'WebView',
+      title: 'README',
     },
   },
 });
@@ -62,18 +62,20 @@ export const SettingsStack = StackNavigator({
 });
 
 export const Tabs = TabNavigator({
-  Feed: {
-    screen: FeedStack,
+  Repositories: {
+    screen: RepositoryStack,
     navigationOptions: {
-      tabBarLabel: 'Repository',
-      tabBarIcon: ({ tintColor }) => <Icon name="repo" type="octicon" size={28} color={tintColor} />,
+      tabBarLabel: 'Repositories',
+      tabBarIcon: ({ tintColor }) =>
+        <Icon name="repo" type="octicon" size={28} color={tintColor} />,
     },
   },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
       tabBarLabel: 'Settings',
-      tabBarIcon: ({ tintColor }) => <Icon name="settings" type="SimpleLineIcons" size={33} color={tintColor} />
+      tabBarIcon: ({ tintColor }) =>
+        <Icon name="settings" type="SimpleLineIcons" size={33} color={tintColor} />,
     },
   },
 });

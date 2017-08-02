@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import ListStyle from './styles';
+import ListStyle from '../utils/styles/lists';
 import Loader from '../components/Loader/Loader';
 
 const styles = StyleSheet.create({

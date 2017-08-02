@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
-import ListStyle from './styles';
+import ListStyle from '../utils/styles/lists';
 import Loader from '../components/Loader/Loader';
 
 const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Detail extends Component {
+export default class Repository extends Component {
   constructor(props) {
     super(props);
 
@@ -126,7 +126,6 @@ export default class Detail extends Component {
 
     const { description,
       pushed_at,
-      homepage,
       language,
       default_branch,
       stargazers_count,
@@ -251,7 +250,7 @@ export default class Detail extends Component {
         </List>
 
         <List>
-          { this.state.contents.map((content) => (
+          { this.state.contents.map(content => (
             content.type === 'file' ?
               <ListItem
                 containerStyle={ListStyle.listItem}
