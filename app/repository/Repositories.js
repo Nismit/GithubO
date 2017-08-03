@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { AsyncStorage, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import Loader from '../components/Loader/Loader';
 import ListStyle from '../utils/styles/lists';
-// import { isActive, setActivation } from '../db/index';
+import { REPO } from '../api/index';
 
 // const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
-const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
+// const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
+const pushed = '?sort=pushed';
 
 export default class Repositories extends Component {
   constructor(props) {
@@ -19,7 +20,21 @@ export default class Repositories extends Component {
   }
 
   componentDidMount() {
-    return fetch(API_URL)
+    let API_URL = '';
+
+    AsyncStorage.getItem('USER')
+      .then(result => {
+        if (result !== null) {
+          API_URL = REPO(result);
+          this.getRepositories(`${API_URL}${pushed}`);
+        } else {
+          // console.log('First time to launched');
+        }
+      }).done();
+  }
+
+  getRepositories = url => {
+    fetch(url)
       .then(response => response.json())
       .then(responseData => {
         this.setState({
@@ -28,6 +43,10 @@ export default class Repositories extends Component {
         });
       }).done();
   }
+
+  props: {
+    navigation: Object,
+  };
 
   showDetail(repoURL) {
     this.props.navigation.navigate('Repository', { repoURL });
