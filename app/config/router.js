@@ -2,6 +2,8 @@ import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+import Splash from '../splash/Splash';
+import SetName from '../splash/SetName';
 import Repositories from '../repository/Repositories';
 import Repository from '../repository/Repository';
 import Issues from '../issues/Issues';
@@ -81,6 +83,18 @@ export const Tabs = TabNavigator({
 });
 
 export const Root = StackNavigator({
+  Splash: {
+    screen: Splash,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  SetName: {
+    screen: SetName,
+    navigationOptions: {
+      header: null,
+    },
+  },
   Tabs: {
     screen: Tabs,
   },
