@@ -1,5 +1,6 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
   "globals": {
     "fetch": false
   },
@@ -7,5 +8,10 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "func-names": 0,
     "react/prefer-stateless-function": 0,
+    "arrow-body-style": "off",
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
   }
 }
