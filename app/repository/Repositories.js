@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import Loader from '../components/Loader/Loader';
 import ListStyle from '../utils/styles/lists';
+// import { isActive, setActivation } from '../db/index';
 
 // const API_URL = 'https://api.github.com/users/Nismit/repos?sort=pushed';
 const API_URL = 'https://api.github.com/users/roots/repos?sort=pushed';
@@ -20,7 +21,7 @@ export default class Repositories extends Component {
   componentDidMount() {
     return fetch(API_URL)
       .then(response => response.json())
-      .then((responseData) => {
+      .then(responseData => {
         this.setState({
           repositories: responseData,
           loaded: true,
