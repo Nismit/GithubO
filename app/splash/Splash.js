@@ -26,12 +26,9 @@ export default class Splash extends Component {
   componentDidMount() {
     const { navigation } = this.props;
 
-    AsyncStorage.getItem('ACTIVE')
+    AsyncStorage.getItem('USER')
       .then(result => {
-        if (result === '1') {
-          this.setState({
-            isActive: true,
-          });
+        if (result !== null) {
           resetNavigation('Tabs', navigation);
         } else {
           // console.log('First time to launched');
@@ -39,6 +36,10 @@ export default class Splash extends Component {
         }
       }).done();
   }
+
+  props: {
+    navigation: Object,
+  };
 
   render() {
     return (
