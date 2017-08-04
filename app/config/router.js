@@ -6,6 +6,7 @@ import Splash from '../splash/Splash';
 import SetName from '../splash/SetName';
 import Repositories from '../repository/Repositories';
 import Repository from '../repository/Repository';
+import Contents from '../repository/Contents';
 import Issues from '../issues/Issues';
 import IssueDetail from '../issues/IssueDetail';
 import Code from '../codeview/index';
@@ -25,6 +26,12 @@ export const RepositoryStack = StackNavigator({
     navigationOptions: {
       title: 'Detail',
     },
+  },
+  Contents: {
+    screen: Contents,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.branch}`,
+    }),
   },
   Issues: {
     screen: Issues,

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
@@ -57,6 +56,7 @@ export default class Repository extends Component {
       pulls: [],
       data: [],
       contents: [],
+      branches: [],
       loaded: false,
     };
   }
@@ -68,18 +68,18 @@ export default class Repository extends Component {
   getRepository() {
     return fetch(this.props.navigation.state.params.repoURL)
       .then(response => response.json())
-      .then((responseData) => {
+      .then(responseData => {
         this.setState({
           data: responseData,
         });
         this.getIssues();
       })
       .then(() => {
-        fetch(this.state.data.contents_url.replace(/\{\+path\}/, ''))
+        fetch(this.state.data.branches_url.replace(/\{\/branch\}/, ''))
           .then(response => response.json())
-          .then((responseData) => {
+          .then(responseData => {
             this.setState({
-              contents: responseData,
+              branches: responseData,
               loaded: true,
             });
           })
@@ -91,13 +91,17 @@ export default class Repository extends Component {
   getIssues() {
     return fetch(this.state.data.issues_url.replace(/\{\/number\}/, ''))
       .then(response => response.json())
-      .then((responseData) => {
+      .then(responseData => {
         this.setState({
           issues: responseData.filter(d => !('pull_request' in d)),
           pulls: responseData.filter(d => 'pull_request' in d),
         });
       })
       .done();
+  }
+
+  props: {
+    navigation: Object,
   }
 
   // memo https://react-native-training.github.io/react-native-elements/API/lists/
@@ -108,6 +112,10 @@ export default class Repository extends Component {
 
   showPR() {
     this.props.navigation.navigate('Issues', { issues: this.state.pulls, type: 'pull_request' });
+  }
+
+  showContents(url, branch) {
+    this.props.navigation.navigate('Contents', { contentsURL: url, branch });
   }
 
   showCode(url) {
@@ -125,7 +133,6 @@ export default class Repository extends Component {
     }
 
     const { description,
-      pushed_at,
       language,
       default_branch,
       stargazers_count,
@@ -133,7 +140,7 @@ export default class Repository extends Component {
       subscribers_count,
     } = this.state.data;
 
-    const lastCommitTime = moment(pushed_at).format('YYYY/MM/DD HH:mm');
+    const contents_url = this.state.data.contents_url.replace(/\/\{\+path\}/, '');
 
     return (
       <ScrollView>
@@ -201,14 +208,12 @@ export default class Repository extends Component {
             title={
               <View><Text>{description !== null ? description : 'No Description'}</Text></View>
             }
-            //rightTitle={lastCommitTime}
             hideChevron
           />
           <ListItem
             containerStyle={ListStyle.listItem}
             titleStyle={ListStyle.listTitle}
             title="README"
-            //rightTitle={lastCommitTime}
             onPress={() => this.openWebView(this.props.navigation.state.params.repoURL + '/readme')}
             // Memo https://api.github.com/repos/roots/sage/readme
           />
@@ -250,38 +255,14 @@ export default class Repository extends Component {
         </List>
 
         <List>
-          { this.state.contents.map(content => (
-            content.type === 'file' ?
-              <ListItem
-                containerStyle={ListStyle.listItem}
-                titleStyle={ListStyle.listTitle}
-                key={content.sha}
-                title={content.name}
-                onPress={() => this.showCode(content.download_url)}
-                leftIcon={
-                  <Icon
-                    style={ListStyle.listIcon}
-                    name="file-text"
-                    type="octicon"
-                    color="rgba(3,47,98,0.5)"
-                  />
-                }
-              />
-            :
-              <ListItem
-                containerStyle={ListStyle.listItem}
-                titleStyle={ListStyle.listTitle}
-                key={content.sha}
-                title={content.name}
-                leftIcon={
-                  <Icon
-                    style={ListStyle.listIcon}
-                    name="file-directory"
-                    type="octicon"
-                    color="rgba(3,47,98,0.5)"
-                  />
-                }
-              />
+          { this.state.branches.map(branch => (
+            <ListItem
+              containerStyle={ListStyle.listItem}
+              titleStyle={ListStyle.listTitle}
+              title={branch.name}
+              key={branch.commit.sha}
+              onPress={() => this.showContents(contents_url, branch.name)}
+            />
           ))}
         </List>
       </ScrollView>
