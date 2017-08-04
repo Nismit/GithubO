@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, AsyncStorage, StyleSheet, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { resetNavigation } from '../utils/navigation/index';
 
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
   submitText: {
     fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 
@@ -37,8 +38,7 @@ export default class SetName extends Component {
     super(props);
 
     this.state = {
-      isSuccess: false,
-      text: '',
+      text: null,
     };
   }
 
@@ -48,11 +48,13 @@ export default class SetName extends Component {
   setName = user => {
     const { navigation } = this.props;
 
-    try {
-      AsyncStorage.setItem('USER', user);
-      resetNavigation('Tabs', navigation);
-    } catch (error) {
-      // Error saving data
+    if (user !== null && user !== '') {
+      try {
+        AsyncStorage.setItem('USER', user);
+        resetNavigation('Tabs', navigation);
+      } catch (error) {
+        // Error saving data
+      }
     }
   };
 
@@ -62,7 +64,10 @@ export default class SetName extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+      >
         <TextInput
           style={styles.textInput}
           placeholder="GitHub Username"
@@ -77,7 +82,7 @@ export default class SetName extends Component {
           title="SUBMIT"
           onPress={() => this.setName(this.state.text)}
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
