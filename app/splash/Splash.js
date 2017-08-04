@@ -44,7 +44,7 @@ export default class Splash extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.largeFont}>GitHub-O</Text>
+        <Text style={styles.largeFont}>GitHubO</Text>
         <Text>GitHub Client App</Text>
       </View>
     );
