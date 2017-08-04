@@ -48,28 +48,9 @@ export default class IssueDetail extends Component {
   componentDidMount() {
   }
 
-  fetchData() {
-    fetch('https://api.github.com/markdown', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'text/html',
-      },
-      body: JSON.stringify({
-        text: this.props.navigation.state.params.issue.body,
-        mode: 'gfm',
-      }),
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      this.setState({
-        mainBody: responseText,
-        loaded: true,
-      });
-    });
+  props: {
+    navigation: Object,
   }
-
-  // memo https://react-native-training.github.io/react-native-elements/API/lists/
 
   render() {
     const body = this.props.navigation.state.params.issue.body;
@@ -95,14 +76,6 @@ export default class IssueDetail extends Component {
           </View>
         </View>
         <View style={styles.basic}><Text>{body}</Text></View>
-        <List style={ListStyle.listContainer}>
-          <ListItem
-            containerStyle={ListStyle.listItem}
-            titleStyle={[ListStyle.listTitle, styles.listTitleDescription]}
-            title="test"
-            onPress={() => this.fetchData()}
-          />
-        </List>
       </ScrollView>
     );
   }
