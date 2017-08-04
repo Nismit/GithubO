@@ -17,10 +17,10 @@ export default class Contents extends Component {
   }
 
   componentDidMount() {
-    this.getRepository();
+    this.getContents();
   }
 
-  getRepository() {
+  getContents() {
     const base = this.state.base;
     const URL = `${base}?ref=${this.state.branch}`;
 
