@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import ListStyle from '../utils/styles/lists';
 import Loader from '../components/Loader/Loader';
 
 const styles = StyleSheet.create({
@@ -26,15 +25,18 @@ export default class Code extends Component {
 
   getCode() {
     return fetch(this.props.navigation.state.params.url)
-      .then((response) => response.text())
-      .then((responseText) => {
+      .then(response => response.text())
+      .then(responseText => {
         this.setState({
           content: responseText,
           loaded: true,
         });
-        console.log(this.state.content);
       });
   }
+
+  props: {
+    navigation: Object,
+  };
 
   render() {
     const load = this.state.loaded;
@@ -45,7 +47,7 @@ export default class Code extends Component {
     return (
       <ScrollView>
         <View style={styles.codeView}>
-          <Text numberOfLines={50}>{this.state.content}</Text>
+          <Text>{this.state.content}</Text>
         </View>
       </ScrollView>
     );
