@@ -27,8 +27,6 @@ export default class Repositories extends Component {
         if (result !== null) {
           API_URL = REPO(result);
           this.getRepositories(`${API_URL}${pushed}`);
-        } else {
-          // console.log('First time to launched');
         }
       }).done();
   }
