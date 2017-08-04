@@ -11,6 +11,7 @@ import IssueDetail from '../issues/IssueDetail';
 import Code from '../codeview/index';
 import Webview from '../webview/index';
 import Settings from '../settings/index';
+import EditUsername from '../settings/edit';
 
 export const RepositoryStack = StackNavigator({
   Repositories: {
@@ -61,13 +62,18 @@ export const SettingsStack = StackNavigator({
       title: 'Settings',
     },
   },
+  EditUsername: {
+    screen: EditUsername,
+    navigationOptions: {
+      title: 'Edit',
+    },
+  },
 });
 
 export const Tabs = TabNavigator({
   Repositories: {
     screen: RepositoryStack,
     navigationOptions: {
-      tabBarLabel: 'Repositories',
       tabBarIcon: ({ tintColor }) =>
         <Icon name="repo" type="octicon" size={28} color={tintColor} />,
     },
@@ -75,12 +81,17 @@ export const Tabs = TabNavigator({
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
-      tabBarLabel: 'Settings',
       tabBarIcon: ({ tintColor }) =>
         <Icon name="settings" type="SimpleLineIcons" size={33} color={tintColor} />,
     },
   },
-});
+},
+  {
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      showLabel: false,
+    },
+  });
 
 export const Root = StackNavigator({
   Splash: {
